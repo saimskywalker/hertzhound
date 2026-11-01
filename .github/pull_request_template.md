@@ -1,0 +1,21 @@
+## What this changes
+
+<!-- One or two sentences. Link the issue it fixes, e.g. "Closes #123". -->
+
+## Checklist
+
+- [ ] `dart format --output=none --set-exit-if-changed .` and `dart analyze --fatal-infos` are clean
+- [ ] `dart test` passes, and `dart test --platform chrome` if `lib/` changed
+- [ ] If this fixes a bug: there is a synthetic fixture in `test/support/` that fails without the fix
+- [ ] Parsers still never throw on input and every read stays bounded
+- [ ] User-visible change: `CHANGELOG.md` entry and README updated
+- [ ] Linked issue:
+
+### AI use
+
+<!-- Using AI is welcome. Required: tick one, naming the tool and model if you used AI; a check fails without it. See CONTRIBUTING.md. -->
+
+- [ ] None
+- [ ] Some (tool or agent, and model: ...)
+- [ ] Most (tool or agent, and model: ...)
+- [ ] I wrote this description myself and I have read and tested every line.

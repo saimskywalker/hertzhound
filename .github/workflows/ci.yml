@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: format, analyze, test (Dart ${{ matrix.sdk }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        # Minimum supported SDK (pubspec.yaml) and the current stable.
+        sdk: ['3.8.0', stable]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+        with:
+          sdk: ${{ matrix.sdk }}
+      - run: dart pub get
+      # The formatter's style follows the SDK version, so format is checked
+      # on stable only.
+      - if: matrix.sdk == 'stable'
+        run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze --fatal-infos
+      - name: test (includes a bounded fuzz run)
+        run: dart test --reporter=expanded
+      - name: pub publish dry run
+        run: dart pub publish --dry-run
+      - name: example runs
+        run: dart run example/main.dart
+
+  web:
+    name: test in Chrome
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+      - run: dart pub get
+      - name: test in Chrome (dart:io tests are skipped there)
+        run: dart test --platform chrome --reporter=expanded

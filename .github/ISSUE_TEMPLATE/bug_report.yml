@@ -1,0 +1,77 @@
+name: Bug report
+description: A file whose format or duration is read wrongly, or an API or CLI problem.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do **not** attach copyrighted audio. Describe the structure, or
+        attach only the header: `head -c 4096 suspect.wav | xxd > header.txt`.
+        Security problems go through the Security tab, not here.
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: |
+        Output of `dart --version` (or `flutter --version`), the host OS, and
+        whether it happens on the VM, on the web, or both.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: writer
+    attributes:
+      label: Format and the program that wrote the file
+      placeholder: "e.g. WAV with a LIST chunk before fmt, written by ..."
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: The call you made and the header hex dump, or a short snippet that builds the bytes.
+      render: dart
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: The right format and duration, and how you know (for example `ffprobe` output).
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: What the package reported, or the error.
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: ai-use
+    attributes:
+      label: Did you use an AI tool to write this issue?
+      options:
+        - "No"
+        - "Yes, for parts"
+        - "Yes, mostly"
+    validations:
+      required: true
+  - type: input
+    id: ai-tool
+    attributes:
+      label: If yes, which tool and model?
+      description: Required if you answered yes above, for example "Claude Code, Opus 5.5" or "Copilot, GPT-5".
+  - type: checkboxes
+    id: own-words
+    attributes:
+      label: Your own words
+      options:
+        - label: I wrote this issue in my own words.
+          required: true
