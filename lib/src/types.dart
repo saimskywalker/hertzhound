@@ -93,15 +93,15 @@ enum ProbeNote {
   fragmented,
 }
 
-/// The lowercase extension of [nameOrPath] without the dot, or null when it
+/// The lowercase extension of [path] without the dot, or null when it
 /// has none.
 ///
 /// Directory segments (`/` and `\`) are ignored, so a dot in a folder name is
 /// never mistaken for an extension, and a leading dot (`.wav`) names a hidden
 /// file rather than an extension. A URL with a scheme is reduced to its path,
 /// so a query string such as `?token=...` is ignored.
-String? extensionOf(String nameOrPath) {
-  var name = nameOrPath;
+String? extensionOf(String path) {
+  var name = path;
   if (name.contains('://')) {
     final uri = Uri.tryParse(name);
     if (uri != null) name = uri.path;
@@ -173,26 +173,26 @@ final class AudioProbe {
   /// Whether [duration] is an exact header value.
   bool get isDurationExact => durationAccuracy == DurationAccuracy.exact;
 
-  /// True when [nameOrPath] carries an extension and that extension disagrees
+  /// True when [path] carries an extension and that extension disagrees
   /// with the bytes: a WAV named `.mp3`.
   ///
   /// False when the bytes are unknown (there is nothing to contradict) or the
   /// name has no extension (it claims nothing). For "will a player that picks
   /// its demuxer from the name get this right?", use [extensionMatches].
-  bool extensionLies(String nameOrPath) {
+  bool extensionLies(String path) {
     if (!isKnown) return false;
-    final ext = extensionOf(nameOrPath);
+    final ext = extensionOf(path);
     return ext != null && !format.extensions.contains(ext);
   }
 
-  /// True when [nameOrPath] ends in an extension that leads a player to the
+  /// True when [path] ends in an extension that leads a player to the
   /// right demuxer for these bytes.
   ///
   /// Wider than `!extensionLies(...)`: a name with no extension does not lie,
   /// but it does not match either, and a player choosing by extension handles
   /// it just as badly.
-  bool extensionMatches(String nameOrPath) {
-    final ext = extensionOf(nameOrPath);
+  bool extensionMatches(String path) {
+    final ext = extensionOf(path);
     return ext != null && format.extensions.contains(ext);
   }
 

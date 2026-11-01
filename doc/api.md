@@ -49,7 +49,7 @@ a few MiB, whatever the file claims about itself.
 `extensions`: every name a player maps to the same demuxer, so an `.mp4`
 holding AAC is not a lie.
 
-`extensionOf(nameOrPath)` returns the lowercase extension, ignoring folders,
+`extensionOf(path)` returns the lowercase extension, ignoring folders,
 dotfiles and URL query strings.
 
 ## `PlaybackAliases`
