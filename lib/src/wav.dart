@@ -58,7 +58,7 @@ AudioProbe parseWav(ByteReader r) {
     final haveAll =
         fmt != null &&
         dataOffset != null &&
-        (fmt.isConstantFrame || factFrames != null);
+        (fmt.hasFixedFrameSize || factFrames != null);
     if (haveAll) break;
   }
   if (walker.missingPad) notes.add(ProbeNote.missingPadByte);
@@ -71,7 +71,7 @@ AudioProbe parseWav(ByteReader r) {
     codec: fmt.codecName,
     sampleRate: fmt.sampleRate,
     channels: fmt.channels > 0 ? fmt.channels : null,
-    bitsPerSample: fmt.isConstantFrame && fmt.bits > 0 ? fmt.bits : null,
+    bitsPerSample: fmt.hasFixedFrameSize && fmt.bits > 0 ? fmt.bits : null,
     audioOffset: dataOffset,
     notes: notes,
   );
@@ -79,7 +79,7 @@ AudioProbe parseWav(ByteReader r) {
 
   Duration? duration;
   var accuracy = DurationAccuracy.exact;
-  if (fmt.isConstantFrame) {
+  if (fmt.hasFixedFrameSize) {
     final align = fmt.blockAlign > 0
         ? fmt.blockAlign
         : fmt.channels * ((fmt.bits + 7) ~/ 8);
@@ -230,7 +230,7 @@ final class _Fmt {
   final int bits;
 
   /// Every frame the same size: PCM, IEEE float, A-law, mu-law.
-  bool get isConstantFrame => tag == 1 || tag == 3 || tag == 6 || tag == 7;
+  bool get hasFixedFrameSize => tag == 1 || tag == 3 || tag == 6 || tag == 7;
 
   String get codecName => switch (tag) {
     1 => 'pcm',
