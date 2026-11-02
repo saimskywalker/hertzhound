@@ -69,3 +69,6 @@ Using AI tools is fine; please just be open about it.
 If this saved you a debugging session, a star on
 [GitHub](https://github.com/saimskywalker/hertzhound) helps other
 Dart and Flutter developers find it.
+
+Don't forget to follow [@saimskywalker](https://github.com/saimskywalker) on
+GitHub to see new releases and other open-source projects as they come out.
