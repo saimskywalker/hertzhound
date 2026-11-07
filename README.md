@@ -9,6 +9,8 @@ Flutter app.
 [![CI](https://github.com/saimskywalker/hertzhound/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/saimskywalker/hertzhound/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/saimskywalker/hertzhound/blob/main/LICENSE)
 
+**Status:** in maintenance. Bug reports and pull requests are still reviewed; new features are on hold.
+
 ## Why
 
 - A local file shows a wildly wrong duration (a six-minute song as 46:26) or
